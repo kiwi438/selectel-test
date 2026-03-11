@@ -1,0 +1,39 @@
+<div class="layout">
+  <header class="header">
+    <span class="header__section">Раздел: {{ activeSection().title }}</span>
+    <div class="header__stats">
+      <span>Выбрано пунктов: {{ checkedCount() }}</span>
+      <span>Общее значение: {{ totalValue() }}</span>
+    </div>
+  </header>
+
+  <div class="content">
+    <aside class="sidebar">
+      @for (section of sections(); track section.id) {
+        <button
+          class="sidebar__item"
+          [class.sidebar__item--active]="section.id === activeSectionId()"
+          (click)="selectSection(section.id)"
+        >
+          {{ section.title }}
+        </button>
+      }
+    </aside>
+
+    <main class="main">
+      @for (item of activeSection().items; track item.id) {
+        <label class="item">
+          <input
+            type="checkbox"
+            [checked]="item.checked"
+            (change)="toggleItem(item)"
+          />
+          <div class="item__info">
+            <span class="item__name">{{ item.name }}</span>
+            <span class="item__value">Value: {{ item.value }}</span>
+          </div>
+        </label>
+      }
+    </main>
+  </div>
+</div>
